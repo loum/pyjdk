@@ -1,63 +1,79 @@
 # PySpark Helper
 - [Overview](#Overview)
 - [Quick Links](#Quick-Links)
-- [Prerequisites](#Prerequisites)
+- [Prequisites](#Prerequisites)
+  - [Upgrading GNU Make (macOS)](#Upgrading-GNU-Make-(macOS))
 - [Getting Started](#Getting-Started)
-- [Getting Help](#Getting-Help)
-- [Docker Image Management](#Docker-Image-Management)
-  - [Image Build](#Image-Build)
-  - [Image Searches](#Image-Searches)
+  - [Building the Local Environment](#Building-the-Local-Environment)
+    - [Local Environment Maintenance](#Local-Environment-Maintenance)
+- [Help](#Help)
+- [Docker Image Development and Management](#Docker-Image-Development-and-Management)
+  - [Building the Docker Image](#Building-the-Docker-Image)
+  - [Searching Images](#Searching-Images)
   - [Image Tagging](#Image-Tagging)
+- [FAQs](#FAQs)
 
 ## Overview
-Quick and easy way to get a PySpark environment with OpenJDK support.
-
-Docker image is based on [Ubuntu Focal 20.04 LTS](https://hub.docker.com/_/ubuntu?tab=description).
+This repository is primarily used to build a vanilla base Docker image for further install of PySpark.  That is, it gives you Python3 and a JVM ready for a PySpark install.  How you do that is completely up to you.  But you probably want to do it as non-`root` and in a Python virtual environment and/or as a less privileged user.
 
 ## Quick Links
-- [PySpark](https://spark.apache.org/docs/latest/api/python/)
+- [Ubuntu](https://ubuntu.com/)
+- [Python](https://www.python.org/)
 
-## Prerequisites
+## Prerequisties
 - [Docker](https://docs.docker.com/install/)
-- [GNU make](https://www.gnu.org/software/make/manual/make.html)
+- [GNU make](<https://www.gnu.org/software/make/manual/make.html>)
 
+### Upgrading GNU Make (macOS)
+Although the macOS machines provide a working GNU `make` it is too old to support the capabilities within the DevOps utilities 
+package, [makester](https://github.com/loum/makester).  Instead, it is recommended to upgrade to the GNU make version provided 
+by Homebrew.  Detailed instructions can be found at https://formulae.brew.sh/formula/make.  In short, to upgrade GNU make run:
+```
+brew install make
+```
+The `make` utility installed by Homebrew can be accessed by `gmake`.  The https://formulae.brew.sh/formula/make notes suggest how you can update your local `PATH` to use `gmake` as `make`.  Alternatively, alias `make`:
+```
+alias make=gmake
+```
 ## Getting Started
+### Building the Local Environment
 Get the code and change into the top level `git` project directory:
 ```
 git clone https://github.com/loum/pyspark-helper.git && cd pyspark-helper
 ```
-> **_NOTE:_** Run all commands from the top-level directory of the `git` repository.
-
-For first-time setup, prime the [Makester project](https://github.com/loum/makester.git):
+For first-time setup, get the [Makester project](https://github.com/loum/makester.git):
 ```
 git submodule update --init
 ```
-Keep [Makester project](https://github.com/loum/makester.git) up-to-date with:
-```
-make submodule-update
-```
-Setup the environment:
+Initialise the environment:
 ```
 make init
 ```
-## Getting Help
-There should be a `make` target to get most things done.  Check the help for more information:
+#### Local Environment Maintenance
+Keep [Makester project](https://github.com/loum/makester.git) up-to-date with:
+```
+git submodule update --remote --merge
+```
+## Help
+There should be a `make` target to be able to get most things done.  Check the help for more information:
 ```
 make help
 ```
-## Docker Image Management
-### Image Build
-When you are ready to build the image:
+## Docker Image Development and Management
+### Building the Image
+> **_NOTE:_** Ubuntu base image used is [focal 20.04](https://hub.docker.com/_/ubuntu)
+
+Build the image with:
 ```
 make build-image
 ```
-### Image Searches
-Search for existing Docker image tags with command:
+### Searching Images
+To list the available Docker images::
 ```
 make search-image
 ```
 ### Image Tagging
-By default, `makester` will tag the new Docker image with the current branch hash.  This provides a degree of uniqueness but is not very intuitive.  That's where the `tag-version` `Makefile` target can help.  To apply tag as per project tagging convention `<PYSPARK_VERSION>-<MAKESTER__RELEASE-NUMBER>`
+By default, `makester` will tag the new Docker image with the current branch hash.  This provides a degree of uniqueness but is not very intuitive.  That's where the `tag-version` `Makefile` target can help.  To apply tag as per project tagging convention `<python3-version>-<openjdk-version>-<image-release-number>`:
 ```
 make tag-version
 ```
@@ -65,7 +81,22 @@ To tag the image as `latest`
 ```
 make tag-latest
 ```
-- MapReduce JobHistory Server web UI: http://localhost:19888
+To tag the image main line (without the `<image-release-number>` that ensures the latest Ubuntu focal release:
+```
+make tag-main
+```
+## Interact with PySpark Helper Image
+Remember, this is just a basic, vanilla Python3/OpenJDK image.  There are some basic commands that you can run in isolation.  To get the Python3 version:
+```
+make python-version
+```
+To start the Python3 interpreter:
+```
+make python
+```
+## FAQs
+**_Q. Why is the default make on macOS so old?_**
+Apple seems to have an issue with licensing around GNU products: more specifically to the terms of the GPLv3 license agreement. It is unlikely that Apple will provide current versions of utilities that are bound by the GPLv3 licensing constraints.
 
 ---
 [top](#PySpark-Helper)
