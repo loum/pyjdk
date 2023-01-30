@@ -144,7 +144,7 @@ make container-run CMD=--version
 > **_NOTE:_** Override the `CMD` variable to pass any CLI options to the Python executable.
 
 ### PySpark REPL
-PySpark is not installed by default. This is to keep the image size as small as possible. However, the environment is ready to support a PySpark install. `loum/pyjdk` can serve as a base image for you larger project. If you only want a quick and simple PySpark REPL, then provide a PySpark version to the `BUILD_PYSPARK_VERSION` environment variable:
+PySpark is not installed by default. This is to keep the image size as small as possible. However, the environment is ready to support a PySpark install. `loum/pyjdk` can serve as a base image for your larger project. If you only want a quick and simple PySpark REPL, then provide a PySpark version to the `BUILD_PYSPARK_VERSION` environment variable:
 ```
 BUILD_PYSPARK_VERSION=3.3.1 m container-run
 ```
