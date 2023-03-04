@@ -8,11 +8,11 @@ MAKESTER__CONTAINER_NAME := pyjdk
 # Makester overrides.
 #
 # Container image build.
-PYTHON_MAJOR_MINOR_VERSION ?= 3.10
-OPENJDK_11_HEADLESS_MAJOR ?= 11
-OPENJDK_11_HEADLESS_VERSION ?= $(OPENJDK_11_HEADLESS_MAJOR).0.17+8-1ubuntu2~22.04
-# Tagging convention used: python.<PYTHON_MAJOR_MINOR_VERSION>-openjdk.<OPENJDK_11_HEADLESS_MAJOR>-<MAKESTER__RELEASE_NUMBER>
-MAKESTER__VERSION ?= python$(PYTHON_MAJOR_MINOR_VERSION)-openjdk$(OPENJDK_11_HEADLESS_MAJOR)
+PYTHON_MAJOR_MINOR_VERSION ?= 3.11
+OPENJDK_11_HEADLESS_MAIN ?= 11.0.18
+export OPENJDK_11_HEADLESS_VERSION ?= $(OPENJDK_11_HEADLESS_MAIN)+10-0ubuntu1~22.04
+# Tagging convention used: openjdk.<OPENJDK_11_HEADLESS_VERSION>-<MAKESTER__RELEASE_NUMBER>
+MAKESTER__VERSION ?= openjdk-$(OPENJDK_11_HEADLESS_MAIN)
 MAKESTER__RELEASE_NUMBER ?= 1
 
 include makester/makefiles/makester.mk
@@ -41,6 +41,10 @@ MAKESTER__IMAGE_TARGET_TAG ?= $(HASH)
 # Initialise the development environment.
 init: py-venv-clear py-venv-init py-install-makester
 
+image-bulk-build:
+	$(info ### Container image bulk build ...)
+	scripts/bulkbuild.sh
+
 image-pull-into-docker:
 	$(info ### Pulling local registry image $(MAKESTER__SERVICE_NAME):$(HASH) into docker)
 	$(MAKESTER__DOCKER) pull $(MAKESTER__SERVICE_NAME):$(HASH)
@@ -62,6 +66,7 @@ multi-arch-build: image-registry-start image-buildx-builder
 help: makester-help
 	@echo "(Makefile)\n\
   init                 Build the local development environment\n\
-  multi-arch-build     Convenience target for multi-arch container image builds\n\
+  image-bulk-build     Build all multi-platform container images\n\
+  multi-arch-build     Convenience target for multi-arch container image builds\n"
 
 .PHONY: help
