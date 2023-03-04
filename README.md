@@ -1,4 +1,4 @@
-# Python3 on Ubuntu
+# Python3 and OpenJDK on Ubuntu
 - [Overview](#overview)
 - [Quick Links](#quick-links)
 - [Prerequisites](#prerequisites)
@@ -39,7 +39,7 @@ Follow [these notes](https://loum.github.io/makester/macos/#upgrading-gnu-make-m
 ### Creating the Local Environment
 Get the code and change into the top level `git` project directory:
 ```
-git clone https://github.com/loum/python3-ubuntu.git && cd python3-ubuntu
+git clone https://github.com/loum/pyjdk.git && cd pyjdk
 ```
 
 > **_NOTE:_** Run all commands from the top-level directory of the `git` repository.
@@ -69,6 +69,7 @@ make help
 ## Docker Image Development and Management
 
 ### Building the Image
+
 > **_NOTE:_** Ubuntu base image is [jammy 22.04](https://hub.docker.com/_/ubuntu)
 
 Build the image with:
@@ -168,4 +169,4 @@ Type --help for more information.
 ```
 
 ---
-[top](#python3-on-ubuntu)
+[top](#python3-and-openjdk-on-ubuntu)
