@@ -11,6 +11,9 @@ USER root
 ARG OPENJDK_11_HEADLESS_VERSION
 RUN apt-get update && apt-get install -y --no-install-recommends\
  git\
+ gcc\
+ ssh\
+ python3-dev\
  openjdk-11-jdk-headless=$OPENJDK_11_HEADLESS_VERSION &&\
  apt-get autoremove -yqq --purge &&\
  rm -rf /var/lib/apt/lists/*
