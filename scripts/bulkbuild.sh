@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for PYTHON_VERSION in 3.8 3.9 3.10
+for PYTHON_VERSION in 3.8 3.9 3.10 3.11
 do
     docker buildx build --platform linux/arm64,linux/amd64\
  --push --rm --no-cache\
@@ -11,7 +11,7 @@ do
 done
 
 # Latest.
-for PYTHON_VERSION in 3.11
+for PYTHON_VERSION in 3.12
 do
     docker buildx build --platform linux/arm64,linux/amd64\
  --push --rm --no-cache\
