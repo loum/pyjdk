@@ -6,7 +6,6 @@
 - [Getting started](#getting-started)
   - [(macOS users only) upgrading GNU Make](#macos-users-only-upgrading-gnu-make)
   - [Creating the local environment](#creating-the-local-environment)
-    - [local environment maintenance](#local-environment-maintenance)
 - [Help](#help)
 - [Docker image development and management](#docker-image-development-and-management)
   - [Building the image](#building-the-image)
@@ -33,6 +32,7 @@ The image build process is based on [GitHub Python project's Docker build](https
 - [GNU make](https://www.gnu.org/software/make/manual/make.html)
 - Python 3 Interpreter. [We recommend installing pyenv](https://github.com/pyenv/pyenv)
 - [Docker](https://www.docker.com/)
+- [Makester project](https://github.com/loum/makester.git)
 
 ## Getting started
 
@@ -50,27 +50,9 @@ Get the code and change into the top level `git` project directory:
 git clone https://github.com/loum/pyjdk.git && cd pyjdk
 ```
 
-> **_NOTE:_** Run all commands from the top-level directory of the `git` repository.
-
-For first-time setup, get the [Makester project](https://github.com/loum/makester.git):
-
-```
-git submodule update --init
-```
-
-Initialise the environment:
-
-```
-make init
-```
-
-#### Local environment maintenance
-
-Keep [Makester project](https://github.com/loum/makester.git) up-to-date with:
-
-```
-git submodule update --remote --merge
-```
+> [!NOTE]
+>
+> Run all commands from the top-level directory of the `git` repository.
 
 ## Help
 
@@ -84,7 +66,7 @@ make help
 
 ### Building the image
 
-> **_NOTE:_** Ubuntu base image is [jammy 22.04](https://hub.docker.com/_/ubuntu)
+> **_NOTE:_** Ubuntu base image is [noble 24.04](https://hub.docker.com/_/ubuntu)
 
 Build the image with:
 
